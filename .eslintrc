@@ -1,0 +1,10 @@
+{
+  "extends": "airbnb",
+  "env": {
+    "meteor": true
+  },
+  "rules": {
+    "no-native-reassign": 0,
+    "no-undef": 0
+  }
+}
