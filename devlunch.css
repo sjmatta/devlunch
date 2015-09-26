@@ -12,3 +12,7 @@
     -ms-user-select: none;
     user-select: none;
 }
+
+.strikeout {
+  text-decoration: line-through;
+}

@@ -1,4 +1,4 @@
-/* globals React, AccountsUIWrapper, SiteList, VotingButtons */
+/* globals React, AccountsUIWrapper, SiteList, ActionButtons */
 
 Sites = new Mongo.Collection('Sites');
 Votes = new Mongo.Collection('Votes');
@@ -13,15 +13,23 @@ if (Meteor.isServer) {
   });
 }
 
+const assertUserAuthorized = () => {
+  if (!Meteor.userId()) {
+    throw new Meteor.Error('not-authorized');
+  }
+};
+
 Meteor.methods({
   castVote(vote) {
-    if (!Meteor.userId()) {
-      throw new Meteor.Error('not-authorized');
-    }
+    assertUserAuthorized();
     // TODO: verify that site exists
     Votes.upsert({user: Meteor.userId()},
       {user: Meteor.userId(), site: vote.site, createdAt: new Date() }
     );
+  },
+  deleteSite(site) {
+    assertUserAuthorized();
+    Sites.update({ name: site }, { $set: { deleted: true }} );
   },
 });
 
@@ -42,28 +50,45 @@ if (Meteor.isClient) {
       });
     },
 
+    onDelete(site) {
+      Meteor.call('deleteSite', site);
+    },
+
     onVote(site) {
-      Meteor.call('castVote', {
-        site: site,
-      });
+      Meteor.call('castVote', { site: site });
     },
 
     getMeteorData() {
+      const siteQuery = this.state.hideCompleted ? { deleted: { $ne: true } } : {};
       return {
-        sites: Sites.find({}, { sort: ['name'] }).fetch(),
+        sites: Sites.find(siteQuery, { sort: ['name'] }).fetch(),
         votes: Votes.find().fetch(),
         user: Meteor.user(),
       };
     },
 
+    toggleHideDeleted() {
+      this.setState({ hideCompleted: !this.state.hideCompleted });
+    },
+
     render() {
-      const votingButtons = this.data.user ?
-        <VotingButtons onVote={this.onVote.bind(this, this.state.selectedSite)} />
-          : <noscript />;
+      const actionButtons = this.data.user ?
+        <ActionButtons
+          onVote={this.onVote.bind(this, this.state.selectedSite)}
+          onDelete={this.onDelete.bind(this, this.state.selectedSite)}
+        /> : <noscript />;
       return (
         <div className="container-fluid">
           <div className="col-sm-12 col-md-6">
             <AccountsUIWrapper  />
+            <label>
+              <input
+                type="checkbox"
+                readOnly={true}
+                checked={this.state.hideDeleted}
+                onClick={this.toggleHideDeleted} />
+              Hide Deleted Sites
+            </label>
             <SiteList
               onClick={this.onClick}
               sites={this.data.sites}
@@ -72,7 +97,7 @@ if (Meteor.isClient) {
               selectedSite={this.state.selectedSite} />
           </div>
           <div className="col-sm-12 col-md-6">
-            {votingButtons}
+            {actionButtons}
           </div>
         </div>
       );

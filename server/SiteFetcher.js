@@ -7,6 +7,7 @@ Meteor.startup(() => {
   };
   const sites = HTTP.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', { params: params });
   sites.data.results.forEach(site => {
+    site.deleted = false;
     Sites.upsert({name: site.name}, site);
   });
 });
