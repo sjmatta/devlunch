@@ -17,18 +17,20 @@ SiteList = React.createClass({
     const voteCount = _.countBy(this.props.votes, vote => vote.site);
     return (
       <div className="table-responsive">
-        <table className="table table-striped unselectable">
-          {this.props.sites.map(site => {
-            const className = classNames(
-              { 'info': this.props.selectedSite === site.name },
-            );
-            return (
-              <tr key={site._id} className={className} onClick={this.onClick.bind(this, site)}>
-                <td>{site.name}</td>
-                <td>{voteCount[site.name]}</td>
-              </tr>
-            );
-          })}
+        <table className="table table-striped table-hover unselectable">
+          <tbody>
+            {this.props.sites.map(site => {
+              const className = classNames(
+                { 'info': this.props.selectedSite === site.name },
+              );
+              return (
+                <tr key={site._id} className={className} onClick={this.onClick.bind(this, site)}>
+                  <td>{site.name}</td>
+                  <td>{voteCount[site.name]}</td>
+                </tr>
+              );
+            })}
+          </tbody>
         </table>
       </div>
     );
