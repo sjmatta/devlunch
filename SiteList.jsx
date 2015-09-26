@@ -22,6 +22,7 @@ SiteList = React.createClass({
             {this.props.sites.map(site => {
               const className = classNames(
                 { 'info': this.props.selectedSite === site.name },
+                { 'strikeout': site.deleted },
               );
               return (
                 <tr key={site._id} className={className} onClick={this.onClick.bind(this, site)}>
