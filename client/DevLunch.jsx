@@ -1,29 +1,20 @@
-/* globals React, TimeSync, AccountsUIWrapper, SiteList, ActionButtons, moment */
+/* globals React, TimeSync, AccountsUIWrapper, SiteList, moment */
 
 Meteor.subscribe('Sites');
 Meteor.subscribe('Votes');
 
 Meteor.startup(() => { TimeSync.resync(); });
 
-const getTimeLeft = () => {
-  const now = moment();
-  const deadline = now.clone().hour(12).minute(0).second(0);
-  if (!now.isBefore(deadline)) {
-    return false;
-  }
-  return deadline.from(now);
-};
-
 const DevLunch = React.createClass({
   mixins: [ReactMeteorData],
 
   getInitialState() {
-    return { selectedSite: '' };
+    return { selectedSite: '', hideDeleted: true };
   },
 
   onClick(site) {
     this.setState({
-      selectedSite: this.state.selectedSite !== site.name ? site.name : '',
+      selectedSite: site.name,
     });
   },
 
@@ -36,7 +27,7 @@ const DevLunch = React.createClass({
   },
 
   getMeteorData() {
-    const siteQuery = this.state.hideCompleted ? { deleted: { $ne: true } } : {};
+    const siteQuery = this.state.hideDeleted ? { deleted: { $ne: true } } : {};
     return {
       sites: Sites.find(siteQuery, { sort: ['name'] }).fetch(),
       votes: Votes.find().fetch(),
@@ -46,17 +37,12 @@ const DevLunch = React.createClass({
   },
 
   toggleHideDeleted() {
-    this.setState({ hideCompleted: !this.state.hideCompleted });
+    this.setState({ hideDeleted: !this.state.hideDeleted });
   },
 
   render() {
     const timeLeft = getTimeLeft();
-    const actionButtons = this.data.user && timeLeft ?
-      <ActionButtons
-        onVote={this.onVote.bind(this, this.state.selectedSite)}
-        onDelete={this.onDelete.bind(this, this.state.selectedSite)}
-        enabled={!!timeLeft}
-      /> : <noscript />;
+    const actionsEnabled = !!this.data.user && !!timeLeft;
     return (
       <div className="container-fluid">
         <div className="col-sm-12 col-md-6">
@@ -74,11 +60,10 @@ const DevLunch = React.createClass({
             onClick={this.onClick}
             sites={this.data.sites}
             votes={this.data.votes}
-            user={this.data.user}
-            selectedSite={this.state.selectedSite} />
-        </div>
-        <div className="col-sm-12 col-md-6">
-          {actionButtons}
+            onVote={this.onVote.bind(this, this.state.selectedSite)}
+            onDelete={this.onDelete.bind(this, this.state.selectedSite)}
+            selectedSite={this.state.selectedSite}
+            actionsEnabled={actionsEnabled}/>
         </div>
       </div>
     );

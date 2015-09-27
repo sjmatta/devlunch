@@ -16,3 +16,8 @@
 .strikeout {
   text-decoration: line-through;
 }
+
+table th.hidden {
+    border: none;
+    visibility: hidden;
+}
