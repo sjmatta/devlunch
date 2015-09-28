@@ -18,7 +18,7 @@ SiteList = React.createClass({
     const voteCount = _.countBy(votes, vote => vote.site);
     return (
       <div className="table-responsive">
-        <table className="table table-striped table-hover table-condensed unselectable">
+        <table className="table table-striped table-hover table-condensed unselectable" style={{cursor: 'pointer'}}>
           <thead>
             <th className="col-md-8 hidden">Location</th>
             <th className="col-md-1 hidden">Votes</th>
@@ -27,7 +27,7 @@ SiteList = React.createClass({
           <tbody>
             {sites.map(site => {
               const isSiteSelected = selectedSite === site.name;
-              const actionButtons = <ActionButtons actionsEnabled={this.props.actionsEnabled} isSiteSelected={isSiteSelected} { ...other } />;
+              const actionButtons = <ActionButtons votingEnabled={this.props.actionsEnabled} visible={isSiteSelected} deleted={site.deleted} { ...other } />;
               const className = classNames(
                 { 'info': isSiteSelected },
                 { 'strikeout': site.deleted },

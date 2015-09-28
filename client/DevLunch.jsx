@@ -19,7 +19,7 @@ const DevLunch = React.createClass({
   },
 
   onDelete(site) {
-    Meteor.call('deleteSite', site);
+    Meteor.call('toggleDelete', site);
   },
 
   onVote(site) {

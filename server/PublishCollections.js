@@ -1,4 +1,3 @@
-
 Meteor.publish('Sites', () => Sites.find());
 Meteor.publish('Votes', function votePublish() {
   if (this.userId) {
