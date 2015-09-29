@@ -1,6 +1,10 @@
-/* globals React, ActionButtons, classNames */
+/* globals React */
 
-SiteList = React.createClass({
+import ActionButtons from './ActionButtons';
+import { _ } from '{underscore}!vars';
+import { classNames } from '{maxharris9:classnames}!vars';
+
+export default React.createClass({
   propTypes: {
     onClick: React.PropTypes.func.isRequired,
     sites: React.PropTypes.array.isRequired,

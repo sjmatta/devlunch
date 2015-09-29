@@ -17,7 +17,7 @@
   text-decoration: line-through;
 }
 
-table th.hidden {
+table .hidden {
     border: none;
     visibility: hidden;
 }

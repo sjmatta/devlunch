@@ -1,11 +1,12 @@
-/* globals React, TimeSync, AccountsUIWrapper, SiteList, moment */
+/* globals React, Meteor, ReactMeteorData, Accounts */
 
-Meteor.subscribe('Sites');
-Meteor.subscribe('Votes');
+import AccountsUIWrapper from 'client/AccountsUIWrapper';
+import SiteList from 'client/SiteList';
+import { TimeSync } from '{mizzao:timesync}!vars';
+import { Sites, Votes } from 'lib/Collections';
+import { getTimeLeft } from 'lib/MeteorMethods';
 
-Meteor.startup(() => { TimeSync.resync(); });
-
-const DevLunch = React.createClass({
+export default React.createClass({
   mixins: [ReactMeteorData],
 
   getInitialState() {
@@ -68,11 +69,4 @@ const DevLunch = React.createClass({
       </div>
     );
   },
-});
-
-$(document).ready(() => {
-  React.render(<DevLunch />, document.getElementById('render-target'));
-  Accounts.ui.config({
-    passwordSignupFields: 'USERNAME_ONLY',
-  });
 });
