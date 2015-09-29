@@ -13,12 +13,14 @@ export default React.createClass({
 
   render() {
     const { votingEnabled, visible, onVote, onDelete, deleted, ...other } = this.props;
-    const style = visible ? {} : { visibility: 'hidden' };
+    const hiddenStyle = { visibility: 'hidden' };
+    const divStyle = visible ? {} : hiddenStyle;
+    const voteStyle = votingEnabled ? {} : hiddenStyle;
     const disabled = !votingEnabled ? 'disabled' : '';
     const classes = classNames('btn', 'btn-sm');
     return (
-      <div className="btn-group" role="group" style={style}>
-        <a role="button" className={classNames(classes, disabled, 'btn-primary')} onClick={onVote}>Vote</a>
+      <div className="btn-group" role="group" style={divStyle}>
+        <a role="button" style={voteStyle} className={classNames(classes, disabled, 'btn-primary')} onClick={onVote}>Vote</a>
         <a role="button" className={classNames(classes, 'btn-danger')} onClick={onDelete}>
           {deleted ? 'Undelete' : 'Delete'}
         </a>

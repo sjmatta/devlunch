@@ -11,6 +11,7 @@ export default React.createClass({
     votes: React.PropTypes.array.isRequired,
     selectedSite: React.PropTypes.string.isRequired,
     actionsEnabled: React.PropTypes.bool.isRequired,
+    userLoggedIn: React.PropTypes.bool.isRequired,
   },
 
   onClick(site) {
@@ -18,7 +19,7 @@ export default React.createClass({
   },
 
   render() {
-    const { onClick, sites, votes, selectedSite, actionsEnabled, ...other } = this.props;
+    const { onClick, sites, votes, selectedSite, actionsEnabled, userLoggedIn, ...other } = this.props;
     const voteCount = _.countBy(votes, vote => vote.site);
     return (
       <div className="table-responsive">
@@ -31,7 +32,7 @@ export default React.createClass({
           <tbody>
             {sites.map(site => {
               const isSiteSelected = selectedSite === site.name;
-              const actionButtons = <ActionButtons votingEnabled={this.props.actionsEnabled} visible={isSiteSelected} deleted={site.deleted} { ...other } />;
+              const actionButtons = <ActionButtons votingEnabled={this.props.actionsEnabled} visible={isSiteSelected && userLoggedIn} deleted={site.deleted} { ...other } />;
               const className = classNames(
                 { 'info': isSiteSelected },
                 { 'strikeout': site.deleted },

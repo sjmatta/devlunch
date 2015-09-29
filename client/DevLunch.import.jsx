@@ -64,7 +64,8 @@ export default React.createClass({
             onVote={this.onVote.bind(this, this.state.selectedSite)}
             onDelete={this.onDelete.bind(this, this.state.selectedSite)}
             selectedSite={this.state.selectedSite}
-            actionsEnabled={actionsEnabled}/>
+            actionsEnabled={actionsEnabled}
+            userLoggedIn={!!this.data.user}/>
         </div>
       </div>
     );
