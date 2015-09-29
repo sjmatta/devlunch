@@ -18,7 +18,6 @@ ecmascript              # Enable ECMAScript2015+ syntax in app code
 react
 http
 accounts-ui
-accounts-password
 maxharris9:classnames
 underscore
 jquery
@@ -26,3 +25,5 @@ twbs:bootstrap
 mizzao:timesync
 momentjs:moment
 universe:modules
+accounts-google
+useraccounts:bootstrap
