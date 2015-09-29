@@ -1,6 +1,6 @@
-/* globals React */
+/* globals React, Blaze, Template */
 
-AccountsUIWrapper = React.createClass({
+export default React.createClass({
   componentDidMount() {
     // Use Meteor Blaze to render login buttons
     this.view = Blaze.render(Template.loginButtons,

@@ -1,3 +1,7 @@
+/* globals Meteor, HTTP */
+
+import { Sites } from 'lib/Collections';
+
 Meteor.startup(() => {
   const params = {
     location: '38.89, -77.08',

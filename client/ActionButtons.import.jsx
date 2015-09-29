@@ -1,6 +1,8 @@
 /* globals React */
 
-ActionButtons = React.createClass({
+import { classNames } from '{maxharris9:classnames}!vars';
+
+export default React.createClass({
   propTypes: {
     onVote: React.PropTypes.func.isRequired,
     onDelete: React.PropTypes.func.isRequired,
