@@ -4,6 +4,7 @@
   "description": "Dependencies for our Cucumber automation layer",
   "private": true,
   "dependencies": {
-    "jasmine": "^2.3.2"
+    "jasmine": "^2.3.2",
+    "underscore": "^1.8.3"
   }
 }
