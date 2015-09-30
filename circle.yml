@@ -1,0 +1,28 @@
+machine:
+  services:
+    - docker
+  java:
+    version: oraclejdk8
+
+dependencies:
+  override:
+    - curl https://install.meteor.com | sh
+
+test:
+  override:
+    - DEBUG=1 JASMINE_SINGLE_RUN=1 JASMINE_CLIENT_UNIT=0 JASMINE_SERVER_UNIT=0 JASMINE_BROWSER=PhantomJS meteor --test
+
+deployment:
+  master:
+    branch: master
+    commands:
+      - docker login tutum.co -e $TUTUM_EMAIL -u $TUTUM_USER -p $TUTUM_PASS
+      - docker build -t tutum.co/$TUTUM_USER/devlunch .
+      - docker push tutum.co/$TUTUM_USER/devlunch
+
+general:
+  artifacts:
+    - ".meteor/local/log/cucumber.log"
+  branches:
+    ignore:
+      - gh-pages
