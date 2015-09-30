@@ -16,8 +16,10 @@ deployment:
   master:
     branch: master
     commands:
-      - docker login tutum.co -e $TUTUM_EMAIL -u $TUTUM_USER -p $TUTUM_PASS
-      - docker build -t tutum.co/$TUTUM_USER/devlunch .
+      - meteor build /tmp/devlunch --directory
+      - cp ./Dockerfile /tmp/devlunch/bundle/
+      - docker build -t tutum.co/$TUTUM_USER/devlunch /tmp/devlunch/bundle/
+      - docker login -e $TUTUM_EMAIL -u $TUTUM_USER -p $TUTUM_PASS tutum.co
       - docker push tutum.co/$TUTUM_USER/devlunch
 
 general:
