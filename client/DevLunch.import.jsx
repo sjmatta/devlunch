@@ -27,6 +27,10 @@ export default React.createClass({
     Meteor.call('castVote', { site: site });
   },
 
+  onVeto(site) {
+    Meteor.call('castVote', { site: site }, true );
+  },
+
   getMeteorData() {
     const siteQuery = this.state.hideDeleted ? { deleted: { $ne: true } } : {};
     return {
@@ -62,6 +66,7 @@ export default React.createClass({
             sites={this.data.sites}
             votes={this.data.votes}
             onVote={this.onVote.bind(this, this.state.selectedSite)}
+            onVeto={this.onVeto.bind(this, this.state.selectedSite)}
             onDelete={this.onDelete.bind(this, this.state.selectedSite)}
             selectedSite={this.state.selectedSite}
             actionsEnabled={actionsEnabled}
