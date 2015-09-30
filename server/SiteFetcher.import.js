@@ -7,7 +7,7 @@ Meteor.startup(() => {
     location: '38.89, -77.08',
     radius: 500,
     types: 'food',
-    key: 'AIzaSyA_VXMQnJnJiZu00BxAkBxoHY3oAByb5Ts',
+    key: 'AIzaSyB3AEjWEAJolxXQj76u2fIR5RkWZVxvVyM',
   };
   const sites = HTTP.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', { params: params });
   sites.data.results.forEach(site => {
