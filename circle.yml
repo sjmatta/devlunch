@@ -10,7 +10,7 @@ dependencies:
 
 test:
   override:
-    - DEBUG=1 JASMINE_SINGLE_RUN=1 JASMINE_CLIENT_UNIT=0 JASMINE_SERVER_UNIT=0 JASMINE_BROWSER=PhantomJS meteor --test
+    - DEBUG=1 JASMINE_SINGLE_RUN=1 JASMINE_CLIENT_UNIT=0 JASMINE_SERVER_UNIT=0 meteor --test
 
 deployment:
   master:
