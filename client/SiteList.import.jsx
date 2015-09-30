@@ -20,7 +20,11 @@ export default React.createClass({
 
   render() {
     const { onClick, sites, votes, selectedSite, actionsEnabled, userLoggedIn, ...other } = this.props;
-    const voteCount = _.countBy(votes, vote => vote.site);
+    const voteCount = _.chain(votes).filter(vote => vote.user === undefined).reduce((mem, vote) => {
+      const ret = {};
+      ret[vote.site] = (mem[vote.site] || 0) + vote.veto ? -1 : 1;
+      return ret;
+    }, {}).value();
     return (
       <div className="table-responsive">
         <table className="table table-striped table-hover table-condensed unselectable" style={{cursor: 'pointer'}}>
