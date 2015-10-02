@@ -3,6 +3,7 @@ accounts-google@1.0.6
 accounts-oauth@1.1.7
 accounts-ui@1.1.6
 accounts-ui-unstyled@1.1.8
+aldeed:moment-timezone@0.4.0
 amplify@1.0.0
 autoupdate@1.2.3
 babel-compiler@5.8.24_1
