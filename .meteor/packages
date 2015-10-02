@@ -28,3 +28,4 @@ universe:modules
 accounts-google
 useraccounts:bootstrap
 xolvio:cucumber
+aldeed:moment-timezone
