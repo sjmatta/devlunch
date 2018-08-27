@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "babel-eslint": "4.1.8",
+    "babel-eslint": "9.0.0",
     "eslint": "1.10.3",
     "eslint-config-airbnb": "0.0.9",
     "eslint-plugin-react": "3.16.1"
